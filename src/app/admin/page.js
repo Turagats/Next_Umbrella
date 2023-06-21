@@ -46,7 +46,7 @@ export default function Admin() {
         body: JSON.stringify(formData),
       });
       console.log("formData");
-      // window.location.href = "/";
+      window.location.href = "/";
     } catch (error) {
       console.error(error);
     }
