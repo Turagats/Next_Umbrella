@@ -7,15 +7,54 @@ import carModels from "./Dataobjcets";
 import { useEffect, useState } from "react";
 
 export default function Home() {
+  console.log(carModels);
   const [isvieWing, setIsViewing] = useState(false);
   const [viwingProduct, setViwingProduct] = useState(null);
   const [dataSource, setDataSource] = useState();
-  // const savedData = localStorage.getItem("formData");
   const savedData = [];
-  // const products = JSON.parse(savedData);
   const products = savedData;
   const thisproduct = products.concat(dataSource);
 
+  // const [forimages, setForimages] = useState([
+  //   {
+  //     id: "8b002a01-f548-4b61-8773-b7d6730d312c",
+  //     name: "Oto",
+  //     description: "Oto",
+  //     price: "Oto",
+  //     picture:
+  //       "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y2Fyc3xlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80",
+  //     category: "Oto",
+  //     src: "",
+  //   },
+  //   {
+  //     id: 1,
+  //     name: "Subaru",
+  //     description: "Synovial hypertrophy, NEC, right forearm",
+  //     price: 70127,
+  //     picture:
+  //       "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y2Fyc3xlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80",
+  //     category: "Landscaping & Irrigation",
+  //     src: "",
+  //   },
+  //   {
+  //     id: 2,
+  //     name: "GMC",
+  //     description: "Food in respiratory tract, part unsp causing asphyxiation",
+  //     price: 147443,
+  //     picture:
+  //       "https://images.unsplash.com/photo-1605559424843-9e4c228bf1c2?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8OXx8Y2Fyc3xlbnwwfHwwfHx8MA%3D%3D&w=1000&q=80",
+  //     category: "RF Shielding",
+  //     src: "",
+  //   },
+  // ]);
+
+  // let theImageURL = [
+  //   forimages.map((item) => {
+  //     item.picture;
+  //   }),
+  // ];
+  console.log(thisproduct);
+  console.log("oto");
   useEffect(() => {
     const fetchData = async (req, res) => {
       try {
@@ -27,13 +66,6 @@ export default function Home() {
         })
           .then((respone) => respone.json())
           .then((data) => setDataSource(data));
-
-        // const some = JSON.stringify(response);
-        // console.log("some");
-        // console.log(response.body);
-        // console.log("some");
-        // window.location.href = "/";
-        // Handle the response or perform any necessary actions
       } catch (error) {
         console.error(error);
       }
@@ -42,11 +74,11 @@ export default function Home() {
   }, []);
 
   const columns = [
-    {
-      key: "1",
-      title: "ID",
-      dataIndex: "id",
-    },
+    // {
+    //   key: "1",
+    //   title: "ID",
+    //   dataIndex: "id",
+    // },
     {
       key: "2",
       title: "Name",
@@ -62,15 +94,34 @@ export default function Home() {
       title: "Price",
       dataIndex: "price",
     },
-    {
-      key: "5",
-      title: "Picture",
-      dataIndex: "picture",
-    },
+    // {
+    //   key: "5",
+    //   title: "Picture",
+    //   dataIndex: "picture",
+    // },
     {
       key: "6",
       title: "Category",
       dataIndex: "category",
+    },
+    {
+      title: "Picture",
+      dataIndex: "url",
+      // render: () => (
+      //   <Image src={forimages.map((item) => item.src ?? "")} alt="picture" />
+      // ),
+      render: (picture) => (
+        <img className="w-6 aspect-square" alt={picture} src={picture} />
+      ),
+
+      // render: (text, record) => {
+      //   return (
+      //     <div>
+      //       <img src={record.picture} />
+      //       {/*<Avatar src={record.productimage}/> */}
+      //     </div>
+      //   );
+      // },
     },
     {
       key: "7",
@@ -124,17 +175,14 @@ export default function Home() {
     });
   };
   return (
-    // <main className="flex min-h-screen flex-col items-center justify-between p-24">
     <main className="App p-10 bg-stone-100 h-screen w-full flex flex-col justify-center">
-      {/* <div className="App p-10 bg-stone-100 h-screen w-full flex flex-col justify-center"> */}
-      <header className="App-header bg-white rounded-lg">
-        <Link href="/admin" className="w-full flex justify-center m-10">
+      <header className="App-header bg-white rounded-lg m-10">
+        <Link href="/admin" className="w-full flex justify-center mt-10">
           <Button className="">Go to Admin Panel</Button>
         </Link>
         <Table
           className="mt-10 p-10"
           columns={columns}
-          // dataSource={thisproduct}
           dataSource={thisproduct}
           rowKey={"id"}
         ></Table>
@@ -162,7 +210,6 @@ export default function Home() {
           <Input className="mb-1" value={viwingProduct?.category} />
         </Modal>
       </header>
-      {/* </div> */}
     </main>
   );
 }

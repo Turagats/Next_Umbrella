@@ -1,26 +1,29 @@
 "use client";
 import React from "react";
-import { Button, Table, Modal, Input, Form } from "antd";
+import { Button, Table, Modal, Input, Form, Upload } from "antd";
 import { useState } from "react";
 import { v4 as uuidv4 } from "uuid";
 import Image from "next/image";
+import { UpCircleFilled } from "@ant-design/icons";
 
 export default function Admin() {
   const [id, setId] = useState(uuidv4());
+  const [uploadedImage, setUploadedImage] = useState(null);
+
   const [formData, setFormData] = useState({
     id: id,
     name: "",
     description: "",
     price: "",
-    picture: "",
+    picture: uploadedImage,
     category: "",
+    url: uploadedImage,
   });
-  // const [products, setProducts] = useState([]);
-  // useEffect(() => {
-  //   // console.log(products);
-  //   localStorage.setItem("formData", JSON.stringify(products));
-  // }, [products]);
 
+  const handleImageUpload = (file) => {
+    // Perform any additional validations or modifications if needed
+    setUploadedImage(file);
+  };
   const handleChange = (event) => {
     setFormData({
       ...formData,
@@ -31,27 +34,8 @@ export default function Admin() {
   const CancelHandler = () => {
     window.location.href = "/";
   };
-  // const SaveHandler = () => {
-  //   // setId(uuidv4());
-
-  //   setProducts([...products, formData]);
-  //   console.log(products);
-  //   setFormData({
-  //     id: uuidv4(),
-  //     name: "",
-  //     description: "",
-  //     price: "",
-  //     picture: "",
-  //     category: "",
-  //   });
-  //   // window.location.href = "/";
-  // };
-  // // console.log(products);/
 
   const handleSubmit = async (event) => {
-    // event.preventDefault();
-
-    // const formData = { name, price, description };
     setId(uuidv4());
     try {
       const response = await fetch("/api/products", {
@@ -62,8 +46,7 @@ export default function Admin() {
         body: JSON.stringify(formData),
       });
       console.log("formData");
-      window.location.href = "/";
-      // Handle the response or perform any necessary actions
+      // window.location.href = "/";
     } catch (error) {
       console.error(error);
     }
@@ -71,7 +54,6 @@ export default function Admin() {
 
   return (
     <div className="flex justify-center items-center h-screen">
-      {/* <div className="flex flex-col gap-5 w-1/4"> */}
       <Form onFinish={handleSubmit}>
         <Form.Item
           rules={[
@@ -140,13 +122,27 @@ export default function Admin() {
           name={"picture"}
           label={"Picture"}
         >
-          <Input
+          {/* <Input
             className="mb-1"
             name="picture"
             value={formData.picture}
             placeholder="picture"
             onChange={handleChange}
-          />
+          /> */}
+          <Upload
+            action={"http://localhost:3000/api/products"}
+            name="picture"
+            // value={formData.picture}
+            // fileList={formData.picture}
+            defaultFileList={formData.picture}
+            listType="picture"
+            beforeUpload={handleImageUpload}
+            fileList={uploadedImage ? [uploadedImage] : []}
+            accept="image/*"
+            multiple={false}
+          >
+            <Button>Upload Photo</Button>
+          </Upload>
         </Form.Item>
 
         <Form.Item
@@ -167,6 +163,7 @@ export default function Admin() {
             onChange={handleChange}
           />
         </Form.Item>
+        <Form.Item></Form.Item>
 
         <div className="flex gap-5 justify-center">
           <Button onClick={CancelHandler}>Cancel</Button>
@@ -175,7 +172,6 @@ export default function Admin() {
           </Button>
         </div>
       </Form>
-      {/* </div> */}
     </div>
   );
 }
