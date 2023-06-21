@@ -9,11 +9,23 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@ant-design/icons": "^5.1.4",
+    "@ant-design/plots": "^1.2.5",
+    "@ant-design/pro-components": "^2.5.11",
+    "antd": "^5.6.1",
     "autoprefixer": "10.4.14",
+    "cors": "^2.8.5",
+    "fs": "^0.0.1-security",
     "next": "13.4.6",
     "postcss": "8.4.24",
     "react": "18.2.0",
     "react-dom": "18.2.0",
-    "tailwindcss": "3.3.2"
+    "tailwindcss": "3.3.2",
+    "uuid": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "20.3.1",
+    "@types/react": "18.2.12",
+    "typescript": "5.1.3"
   }
 }
